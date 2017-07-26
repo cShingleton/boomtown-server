@@ -32,6 +32,27 @@ export function getUsers() {
                 .catch(errors => console.log(errors));
 }
 
+export function createUser(args) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const fbUser = await admin.auth().createUser({
+                email: args.email,
+                password: args.password
+            });
+            const query = {
+                text: `INSERT INTO user_profiles(fullname, bio, userid) VALUES($1, $2, $3) RETURNING *`,
+                values: [args.fullname, args.bio, fbUser.uid]
+            }; 
+            const pgUser = await pool.query(query);
+            const newUser = { ...pgUser.rows[0], email: fbUser.email, id: fbUser.uid };
+            resolve(newUser);
+        } catch (e) {
+            console.log(e);
+            reject(e);
+        }
+    });
+}
+
 export function getItems() {
     return pool.query(`SELECT * FROM public.items`)
                 .then(response => {

@@ -1,5 +1,5 @@
 import Json from './json-server';
-import { getUsers, getItems } from './postgres-server';
+import { getUsers, getItems, createUser } from './postgres-server';
 
 const resolveFunctions = {
     Query: {
@@ -53,6 +53,16 @@ const resolveFunctions = {
                 borrower: null
             }
             return Json.addItem(newItem);
+        },
+
+        addUser: (root, args) => {
+            // const newUser = {
+            //     email: args.email,
+            //     bio: args.bio,
+            //     fullname: args.fullname,
+            //     password: args.password
+            // }
+            return createUser(args);
         }
     }
 };
