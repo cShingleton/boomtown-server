@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 
 const pool = new Pool({
   host: 'localhost',
-  user: 'testing', // postgres user
+  user: 'boommayor', // postgres user
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000

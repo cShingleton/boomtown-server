@@ -29,17 +29,17 @@ const Json = {
 //             .catch(err => console.log(err));
 // }
 
-Json.getItemsShared = (userId) => {
-    return fetch(`${Json.itemsUrl}/?itemOwner=${userId}`)
-            .then(res => res.json())
-            .catch(err => console.log(err));
-}
+// Json.getItemsShared = (id) => {
+//     return fetch(`${Json.itemsUrl}/?itemOwner=${id}`)
+//             .then(res => res.json())
+//             .catch(err => console.log(err));
+// }
 
-Json.getItemsBorrowed = (userId) => {
-    return fetch(`${Json.itemsUrl}/?borrower=${userId}`)
-            .then(res => res.json())
-            .catch(err => console.log(err));
-}
+// Json.getItemsBorrowed = (id) => {
+//     return fetch(`${Json.itemsUrl}/?borrower=${id}`)
+//             .then(res => res.json())
+//             .catch(err => console.log(err));
+// }
 
 Json.addItem = (itemToAdd) => {
     let postData = { 

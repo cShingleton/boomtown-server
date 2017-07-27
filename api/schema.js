@@ -18,12 +18,21 @@ const typeDefs = `
         id: Int!
         title: String!
         description: String!
-        imageUrl: String!
-        tags: [String]!
-        itemOwner: User!
-        createdOn: Int!
+        imageurl: String!
+        tags: [Tag]!
+        itemowner: User!
+        created: Int!
         available: Boolean!
         borrower: User
+    }
+
+    input AssignedTag {
+        id: Int!
+    }
+
+    type Tag {
+        id: Int!
+        title: String!
     }
 
     type Query {
@@ -31,15 +40,16 @@ const typeDefs = `
         user(id: ID!): User
         items: [Item]
         item(id: ID!): Item
+        tags: [Tag]
     }
 
     type Mutation {
         addItem (
             title: String!
             description: String!
-            imageUrl: String!
-            tags: [String]!
-            itemOwner: ID!
+            imageurl: String!
+            tags: [AssignedTag]!
+            itemowner: ID!
         ): Item
 
         addUser(

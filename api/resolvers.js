@@ -1,5 +1,5 @@
-import Json from './json-server';
-import { getUsers, getItems, createUser } from './postgres-server';
+// import Json from './json-server';
+import { getUsers, getItems, createUser, getTagsForItem, addItem } from './postgres-server';
 
 const resolveFunctions = {
     Query: {
@@ -21,12 +21,15 @@ const resolveFunctions = {
     },
 
     Item: {
-        itemOwner: (item, { }, context) => { // may need to replace empty braces with args
-           return context.loaders.GetUser.load(item.itemOwner);
+        itemowner: (item, { }, context) => { // may need to replace empty braces with args
+           return context.loaders.GetUser.load(item.itemowner);
         },
         borrower: (item, { }, context) => {
             if (!item.borrower) return null;
             return context.loaders.GetUser.load(item.borrower);
+        },
+        tags: (item, { }, context) => {
+            return getTagsForItem(item.id);
         }
     },
 
@@ -41,18 +44,8 @@ const resolveFunctions = {
     },
 
     Mutation: {
-        addItem: (root, args) => {
-            const newItem = {
-                title: args.title,
-                description: args.description,
-                imageUrl: args.imageUrl,
-                tags: args.tags,
-                itemOwner: args.itemOwner,
-                createdOn: Math.floor(Date.now() / 1000),
-                available: true,
-                borrower: null
-            }
-            return Json.addItem(newItem);
+        addItem: (root, args, context) => {
+            return addItem(args, context);
         },
 
         addUser: (root, args, context) => {
