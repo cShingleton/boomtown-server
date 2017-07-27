@@ -32,7 +32,7 @@ export function getUsers() {
                 .catch(errors => console.log(errors));
 }
 
-export function createUser(args) {
+export function createUser(args, context) {
     return new Promise(async (resolve, reject) => {
         try {
             const fbUser = await admin.auth().createUser({
@@ -45,6 +45,8 @@ export function createUser(args) {
             }; 
             const pgUser = await pool.query(query);
             const newUser = { ...pgUser.rows[0], email: fbUser.email, id: fbUser.uid };
+            // set token header
+            // context.response.set('FireBase-Token', context.token);
             resolve(newUser);
         } catch (e) {
             console.log(e);

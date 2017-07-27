@@ -55,14 +55,8 @@ const resolveFunctions = {
             return Json.addItem(newItem);
         },
 
-        addUser: (root, args) => {
-            // const newUser = {
-            //     email: args.email,
-            //     bio: args.bio,
-            //     fullname: args.fullname,
-            //     password: args.password
-            // }
-            return createUser(args);
+        addUser: (root, args, context) => {
+            return createUser(args, context);
         }
     }
 };
